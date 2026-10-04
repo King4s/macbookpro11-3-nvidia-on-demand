@@ -1,0 +1,37 @@
+From cac96c8d93faa073456fbb3a504b2a3d15d51841 Mon Sep 17 00:00:00 2001
+From: Philipp Stanner <phasta@kernel.org>
+Date: Wed, 15 Apr 2026 16:49:57 +0200
+Subject: [PATCH] drm/nouveau: Fix double call to drm_sched_entity_fini()
+
+nouveau_abi16_chan_fini() does invoke drm_sched_entity_fini() twice:
+Once directly, and a second time through nouveau_sched_destroy().
+
+That's likely undesired behavior and might be a bug since
+drm_sched_entity_fini() decrements reference counts.
+
+Fix the issue by using the appropriate function,
+drm_sched_entity_kill(), to kill all remaining jobs within the entity.
+
+Cc: stable@kernel.vger.org
+Fixes: 9a0c32d698c1 ("drm/nouveau: don't fini scheduler if not initialized")
+Suggested-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20260415144956.272506-3-phasta@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+---
+ drivers/gpu/drm/nouveau/nouveau_abi16.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/nouveau/nouveau_abi16.c b/drivers/gpu/drm/nouveau/nouveau_abi16.c
+index 7860877d909b03..291203121f0c25 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_abi16.c
++++ b/drivers/gpu/drm/nouveau/nouveau_abi16.c
+@@ -176,7 +176,7 @@ nouveau_abi16_chan_fini(struct nouveau_abi16 *abi16,
+ 
+ 	/* Cancel all jobs from the entity's queue. */
+ 	if (chan->sched)
+-		drm_sched_entity_fini(&chan->sched->entity);
++		drm_sched_entity_kill(&chan->sched->entity);
+ 
+ 	if (chan->chan)
+ 		nouveau_channel_idle(chan->chan);

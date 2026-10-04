@@ -1,0 +1,30 @@
+[Unit]
+Description=Intel desktop with patched Nvidia on-demand runtime PM
+After=systemd-modules-load.service systemd-udev-settle.service plymouth-start.service
+Wants=systemd-udev-settle.service
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+# Release the boot-splash DRM client; no daemon on warm starts is harmless.
+# Keep each command bounded. The helper still refuses any remaining clients.
+ExecStartPre=-/usr/bin/timeout 20s /usr/bin/plymouth quit
+ExecStartPre=-/usr/bin/timeout 20s /usr/bin/plymouth --wait
+ExecStart=/usr/bin/python3 -I /usr/local/libexec/gpu_boot.py
+ExecStopPost=/usr/bin/python3 -I /usr/local/libexec/gpu_boot.py --recover
+RemainAfterExit=yes
+RuntimeDirectory=gpu-on-demand
+RuntimeDirectoryMode=0700
+RuntimeDirectoryPreserve=yes
+TimeoutStartSec=120
+TimeoutStopSec=25
+KillMode=control-group
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+# Enabling MUST create this Requires link as well as the graphical Wants link.
+# With Before=display-manager.service, any setup/recovery failure blocks its start.
+# No automatic stock-driver fallback; recover manually, then restart this unit.
+WantedBy=graphical.target
+RequiredBy=display-manager.service

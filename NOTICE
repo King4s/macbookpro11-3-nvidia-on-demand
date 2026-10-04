@@ -1,0 +1,40 @@
+macbookpro11-3-nvidia-on-demand
+
+This package separates project-owned MIT reference helpers/documentation from
+upstream Linux kernel patch material. The MIT license at the repository root
+must not be read as relicensing Linux code or patches.
+
+Upstream fixes (patch messages preserved verbatim):
+
+1. 2f5f05633e2229c8ec379e1d65151165c905671e
+   drm/sched: Make drm_sched_entity_kill() a public function
+   Author: Philipp Stanner <phasta@kernel.org>
+   Suggested-by: Danilo Krummrich <dakr@kernel.org>
+   Signed-off-by: Philipp Stanner and Danilo Krummrich
+   https://patch.msgid.link/20260415144956.272506-2-phasta@kernel.org
+
+2. cac96c8d93faa073456fbb3a504b2a3d15d51841
+   drm/nouveau: Fix double call to drm_sched_entity_fini()
+   Author: Philipp Stanner <phasta@kernel.org>
+   Suggested-by: Danilo Krummrich <dakr@kernel.org>
+   Signed-off-by: Philipp Stanner and Danilo Krummrich
+   https://patch.msgid.link/20260415144956.272506-3-phasta@kernel.org
+
+Patch material is distributed here as GPL-2.0-only Linux kernel material.
+The complete GPL-2.0 text is in LICENSES/GPL-2.0-only.txt. The reviewed affected
+source files retain permissive notices attributed to Advanced Micro Devices,
+Inc. (2015) and Red Hat Inc. (2012); those notices are reproduced separately in
+LICENSES/upstream-permissive-notices.txt. Existing upstream licensing rights
+are not erased or narrowed by this component notice.
+
+Community research credit:
+https://github.com/joaodriessen/macbookpro11-3-cachyos/blob/main/docs/hybrid-gpu-results.md
+
+This is attribution, not a claim of endorsement or that the upstream/community
+authors tested this package. No text from that community report is reproduced.
+The kernel, Nouveau, Mesa, Ubuntu and related projects retain their respective
+copyrights and trademarks.
+
+No binaries, machine-specific manifests, raw logs or screenshots are shipped.
+Results are limited observations on one reference machine, not general
+compatibility, power savings or stability guarantees. Use at your own risk.

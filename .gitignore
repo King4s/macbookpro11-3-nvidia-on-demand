@@ -1,0 +1,45 @@
+# Local source/build material is never part of the publication.
+source/
+**/source/
+build/
+bundle/
+**/bundle/
+*.ko
+*.ko.*
+*.o
+*.a
+*.so
+*.mod
+*.mod.c
+*.cmd
+Module.symvers
+modules.order
+*.dsc
+*.tar
+*.tar.*
+*.diff.gz
+# Machine-specific records and evidence.
+manifest.json
+**/manifest.json
+*.log
+*.jsonl
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.mp4
+*.pdf
+*.csv
+*.sqlite*
+logs/
+artifacts/
+raw/
+# Python/test scratch.
+__pycache__/
+*.py[cod]
+.test-tmp/
+.pytest_cache/
+.venv/
+.env
+.env.*
